@@ -1,27 +1,38 @@
 import Image from "next/image";
-import styles from "./page.module.scss";
+import styles from "../page.module.scss";
 import logoImg from "/public/logocortado.png";
 import Link from "next/link";
 
-export default function Home() {
+export default function Signup() {
   return (
     <>
       <div className={styles.containerCenter}>
         <Image className={styles.logo} src={logoImg} alt="Logo BSL" />
         <section className={styles.login}>
+          <h1>Criando sua conta</h1>
           <form
           // onSubmit={handleLogin}
           >
             <input
-              placeholder="Digite seu email"
+              placeholder="Digite seu nome..."
+              name="name"
               type="text"
               className={styles.input}
               // value={email}
               // onChange={(e) => setEmail(e.target.value)}
             />
             <input
-              placeholder="Digite sua senha"
+              placeholder="Digite seu email..."
+              name="email"
+              type="text"
+              className={styles.input}
+              // value={email}
+              // onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              placeholder="Digite sua senha..."
               type="password"
+              name="password"
               className={styles.input}
               // value={password}
               // onChange={(e) => setPassword(e.target.value)}
@@ -31,12 +42,12 @@ export default function Home() {
               type="submit"
               // loading={loading}
             >
-              Acessar
+              Cadastrar
             </button>
           </form>
 
-          <Link className={styles.text} href="/signup">
-            Não possui uma conta? Cadastre-se!
+          <Link className={styles.text} href="/">
+            Já possui uma conta? Faça o login
           </Link>
         </section>
       </div>
