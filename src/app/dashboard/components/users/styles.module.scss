@@ -1,0 +1,37 @@
+.container {
+  max-width: 720px;
+  margin: 20px auto;
+  padding: 0 16px;
+
+  display: flex;
+  justify-content: space-center;
+  align-items: center;
+  flex-direction: column;
+
+  h1 {
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+}
+
+.lisUser {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userItem {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  justify-content: center;
+  background-color: var(--dark-900);
+  align-items: center;
+  border: 0;
+  font-size: 18px;
+  border-radius: 8px;
+  color: var(--white);
+  width: 320px;
+  height: 60px;
+  padding: 12px;
+}
