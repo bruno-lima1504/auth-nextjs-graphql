@@ -3,6 +3,10 @@
 
 ## Scripts
 
+Instalar as dependencias após clonar o repositório:
+
+    - npm install
+
 Iniciar serviços web:
 
     - npm run dev
