@@ -1,7 +1,9 @@
+import Users from "./components/users";
+
 export default function Dashboard() {
   return (
-    <div>
-      <h1>DASHBOARD</h1>
-    </div>
+    <>
+      <Users />
+    </>
   );
 }
