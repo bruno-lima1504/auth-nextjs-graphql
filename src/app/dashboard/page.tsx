@@ -3,7 +3,7 @@ import { api } from "@/services/api";
 import { getCookieServer } from "@/lib/cookieServer";
 import { ListUser } from "@/lib/user.type";
 import styles from "./styles.module.scss";
-async function getUsers(): Promise<ListUser | []> {
+async function getUsers(): Promise<ListUser | null> {
   const query = `query {
                   ListUser {
                     users {
@@ -30,10 +30,10 @@ async function getUsers(): Promise<ListUser | []> {
 
     const result = await response.data.data.ListUser;
 
-    return result || [];
+    return result;
   } catch (err) {
     console.log("Falha ao buscar usuários", err);
-    return [];
+    return null;
   }
 }
 
