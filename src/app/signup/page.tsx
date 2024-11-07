@@ -1,20 +1,29 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import styles from "../page.module.scss";
 import logoImg from "/public/logocortado.png";
 import Link from "next/link";
 import { api } from "@/services/api";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-export default async function Signup() {
-  async function handleRegister(formData: FormData) {
-    "use server";
+export default function Signup() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-    const name = formData.get("name")?.toString();
-    const email = formData.get("email")?.toString();
-    const password = formData.get("password")?.toString();
+  async function handleRegister() {
+    console.log("passou aqui");
+
+    setLoading(true);
 
     if (!name || !email || !password) {
-      console.log("Preencha todos os campos");
+      toast.error("Preencha todos os campos");
+      setLoading(false);
       return;
     }
 
@@ -44,57 +53,64 @@ export default async function Signup() {
         },
       );
 
-      const result = await response.data;
-
+      const result = response.data;
       if (result.errors) {
+        toast.error("Erro ao criar usuário");
         console.log("Erro ao criar usuário:", result.errors);
       } else {
+        toast.success("Usuário criado com sucesso");
         console.log("Usuário criado com sucesso:", result.data.createUser);
+        router.push("/");
       }
     } catch (err) {
       console.log("Erro na requisição:", err);
+      toast.error("Erro na requisição");
+    } finally {
+      setLoading(false);
     }
-
-    redirect("/");
   }
 
   return (
-    <>
-      <div className={styles.containerCenter}>
-        <Image className={styles.logo} src={logoImg} alt="Logo BSL" />
-        <section className={styles.login}>
-          <h1>Criando sua conta</h1>
-          <form action={handleRegister}>
-            <input
-              placeholder="Digite seu nome..."
-              name="name"
-              type="text"
-              className={styles.input}
-              required
-            />
-            <input
-              placeholder="Digite seu email..."
-              name="email"
-              type="text"
-              className={styles.input}
-              required
-            />
-            <input
-              placeholder="Digite sua senha..."
-              type="password"
-              name="password"
-              className={styles.input}
-              required
-            />
-
-            <button type="submit">Cadastrar</button>
-          </form>
-
-          <Link className={styles.text} href="/">
-            Já possui uma conta? Faça o login
-          </Link>
-        </section>
-      </div>
-    </>
+    <div className={styles.containerCenter}>
+      <Image className={styles.logo} src={logoImg} alt="Logo BSL" />
+      <section className={styles.login}>
+        <h1>Criando sua conta</h1>
+        <div>
+          <input
+            placeholder="Digite seu nome..."
+            name="name"
+            type="text"
+            className={styles.input}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <input
+            placeholder="Digite seu email..."
+            name="email"
+            type="text"
+            className={styles.input}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            placeholder="Digite sua senha..."
+            type="password"
+            name="password"
+            className={styles.input}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button onClick={handleRegister} disabled={loading}>
+            {loading ? "Carregando..." : "Cadastrar"}
+          </button>
+        </div>
+        <Link className={styles.text} href="/">
+          Já possui uma conta? Faça o login
+        </Link>
+      </section>
+    </div>
   );
 }
